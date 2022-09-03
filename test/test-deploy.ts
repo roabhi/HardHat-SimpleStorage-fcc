@@ -1,14 +1,16 @@
-const { ethers } = require("hardhat")
-const { expect, assert } = require("chai")
+import {ethers} from "hardhat"
+import {expect, assert} from "chai"
+import {SimpleStorage, SimpleStorage__factory} from "../typechain-types"
+import { BigNumber } from "ethers"
 
 describe("SimpleStorage", function () {
     //Needed code for all test
     // 1.- Define vars
     // 2.- beforeEach get contract factory and wait for contract deployemt
-    let simpleStorageFactory, simpleStorage
+    let simpleStorageFactory:SimpleStorage__factory, simpleStorage:SimpleStorage
     const People = []
     beforeEach(async function () {
-        simpleStorageFactory = await ethers.getContractFactory("SimpleStorage")
+        simpleStorageFactory = (await ethers.getContractFactory("SimpleStorage")) as SimpleStorage__factory
         simpleStorage = await simpleStorageFactory.deploy()
     })
 
@@ -23,7 +25,7 @@ describe("SimpleStorage", function () {
     //Test if we can update fave number
 
     it("Should update when we call store", async function () {
-        const expectedValue = 7
+        const expectedValue = "7"
         const transactionResponse = await simpleStorage.store(expectedValue)
         await transactionResponse.wait(1)
 
@@ -34,7 +36,7 @@ describe("SimpleStorage", function () {
     //Test if we can add a new person
     it("Should add a new person with a name and a favorite number", async function () {
         const expectedPersonName = "John"
-        const expectedPersonNumber = 7
+        const expectedPersonNumber = "7"
         const txnResponse = await simpleStorage.addPerson(
             expectedPersonName,
             expectedPersonNumber
@@ -42,6 +44,6 @@ describe("SimpleStorage", function () {
         await txnResponse.wait(1)
         const { favoriteNumber, name } = await simpleStorage.people(0)
         assert.equal(name, expectedPersonName)
-        assert.equal(favoriteNumber, expectedPersonNumber)
+        assert.equal(favoriteNumber.toString(), expectedPersonNumber)
     })
 })
