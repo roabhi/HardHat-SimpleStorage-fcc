@@ -31,6 +31,13 @@ async function main() {
     await transactionResponse.wait(1)
     const updatedValue = await simpleStorage.retrieve()
     console.log(`Updated value is: ${updatedValue}`)
+
+    //add Person
+    const addPersonRes = await simpleStorage.addPerson("John", 7)
+    await addPersonRes.wait(1)
+    // const peopleRes = await simpleStorage.people[0]
+    // await peopleRes.wait(1)
+    // console.log(peopleRes)
 }
 
 async function verify(contractAddreess, args) {
