@@ -13,4 +13,10 @@ npx hardhat test
 npx hardhat node
 ```
 
+Typescript version. To generate types
+
+```shell
+npx hardhat typechain
+```
+
 Reference code is [here](https://github.com/PatrickAlphaC/hardhat-simple-storage-fcc)
